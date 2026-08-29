@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { COLORS, pageBg, sandyBtn, WavyDivider } from "../ui/shared";
+import ccsLogo from "../assets/ccs-logo.png";
 
 const PLACEHOLDER_FORMS = [
   { id: "form-1", title: "Customer Satisfaction Survey", fields: 4, updated: "2 hours ago" },
@@ -7,28 +8,81 @@ const PLACEHOLDER_FORMS = [
   { id: "form-3", title: "Product Feedback",             fields: 3, updated: "3 days ago"  },
 ];
 
+const BUBBLES = [
+  { size: 16, left: "8%",  delay: 0  },
+  { size: 24, left: "22%", delay: 4  },
+  { size: 12, left: "45%", delay: 2  },
+  { size: 20, left: "68%", delay: 6  },
+  { size: 14, left: "85%", delay: 3  },
+  { size: 18, left: "35%", delay: 8  },
+];
+
+function AmbientBubbles() {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0, left: 0, right: 0, bottom: 0,
+        overflow: "hidden",
+        pointerEvents: "none",
+        zIndex: 0,
+      }}
+    >
+      <style>{`
+        @keyframes dashboardFloatUp {
+          0%   { transform: translateY(0);      opacity: 0; }
+          10%  { opacity: 0.5; }
+          90%  { opacity: 0.3; }
+          100% { transform: translateY(-100vh); opacity: 0; }
+        }
+      `}</style>
+      {BUBBLES.map((b, i) => (
+        <span
+          key={i}
+          style={{
+            position: "absolute",
+            bottom: -40,
+            left: b.left,
+            width: b.size,
+            height: b.size,
+            borderRadius: "50%",
+            border: "1px solid #2DD4BF",
+            background: "rgba(45,212,191,0.03)",
+            animation: `dashboardFloatUp ${18 + b.delay}s linear ${b.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ ...pageBg, display: "flex", flexDirection: "column" }}>
+    <div style={{ ...pageBg, display: "flex", flexDirection: "column", position: "relative" }}>
+      <AmbientBubbles />
+
       <header style={{
-        height: 50,
+        height: 72,
         background: "rgba(11,26,36,0.92)",
         borderBottom: "1px solid rgba(255,255,255,0.07)",
         display: "flex", alignItems: "center",
-        padding: "0 24px", gap: 12, flexShrink: 0,
+        padding: "0 32px", gap: 12, flexShrink: 0,
+        position: "relative", zIndex: 1,
       }}>
         <button
           onClick={() => navigate("/")}
           style={{
             background: "none", border: "none", cursor: "pointer",
+            display: "flex", alignItems: "center", gap: 8,
             fontFamily: "'Bricolage Grotesque', sans-serif",
             fontWeight: 700, fontSize: 14.5,
             color: COLORS.heading, letterSpacing: "-0.02em",
           }}
         >
-          FormCraft
+          <img src={ccsLogo} alt="CCS logo" style={{ width: 22, height: 22, objectFit: "contain" }} />
+          CCS Forms
         </button>
 
         <div style={{ flex: 1 }} />
@@ -41,11 +95,11 @@ export default function DashboardPage() {
         </button>
       </header>
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "32px 24px" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "32px 24px", position: "relative", zIndex: 1 }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <h1 style={{
             fontFamily: "'Bricolage Grotesque', sans-serif",
-            fontWeight: 700, fontSize: 22, letterSpacing: "-0.02em",
+            fontWeight: 700, fontSize: 40, letterSpacing: "-0.02em",
             color: COLORS.heading, margin: "0 0 4px",
           }}>
             My Forms

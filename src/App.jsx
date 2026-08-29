@@ -4,6 +4,7 @@ import WelcomePage from './pages/WelcomePage'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import FormEditorPage from './pages/FormEditorPage'
+import SignupPage from './pages/SignupPage'
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
 
         <Route path="/form/:id" element={<FormEditorPage />} />
+
+        <Route path="/signup" element={<SignupPage />} />
 
       </Routes>
     </BrowserRouter>

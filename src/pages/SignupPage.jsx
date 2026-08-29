@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { COLORS, sandyInput, sandyBtn, pageBg, focusInput, blurInput, WavyDivider } from "../ui/shared";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,6 +34,7 @@ export default function LoginPage() {
           FormCraft
         </button>
       </header>
+
       <div style={{
         flex: 1, display: "flex", alignItems: "center",
         justifyContent: "center", padding: "40px 24px",
@@ -43,16 +45,35 @@ export default function LoginPage() {
             fontWeight: 700, fontSize: 26, letterSpacing: "-0.025em",
             color: COLORS.heading, margin: "0 0 6px", textAlign: "center",
           }}>
-            Welcome back
+            Create your account
           </h1>
           <p style={{
             fontSize: 13.5, color: COLORS.muted, textAlign: "center",
             margin: "0 0 28px",
           }}>
-            Log in to your FormCraft account.
+            Start building forms in seconds.
           </p>
+
           <WavyDivider color="rgba(255,255,255,0.07)" style={{ marginBottom: 28 }} />
+
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div>
+              <label style={{
+                display: "block", fontSize: 11.5, fontWeight: 500,
+                color: COLORS.muted, marginBottom: 5,
+              }}>
+                Full name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                required
+                style={sandyInput}
+                onFocus={focusInput} onBlur={blurInput}
+              />
+            </div>
             <div>
               <label style={{
                 display: "block", fontSize: 11.5, fontWeight: 500,
@@ -81,29 +102,31 @@ export default function LoginPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Your password"
+                placeholder="Create a password"
                 required
                 style={sandyInput}
                 onFocus={focusInput} onBlur={blurInput}
               />
             </div>
+
             <button type="submit" style={{ ...sandyBtn, width: "100%", marginTop: 6, padding: "11px 24px" }}>
-              Log in
+              Create account
             </button>
           </form>
+
           <p style={{
             textAlign: "center", fontSize: 13, color: COLORS.muted, marginTop: 20,
           }}>
-            No account?{" "}
+            Already have an account?{" "}
             <button
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
               style={{
                 background: "none", border: "none", cursor: "pointer",
                 color: COLORS.teal, fontSize: 13, fontWeight: 500,
                 padding: 0, fontFamily: "'Inter', sans-serif",
               }}
             >
-              Sign up
+              Log in
             </button>
           </p>
         </div>

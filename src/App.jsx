@@ -8,7 +8,7 @@ import SignupPage from './pages/SignupPage'
 import FormPreviewPage from './pages/FormPreviewPage'
 import FormResponsesPage from './pages/FormResponsesPage'
 import FormSettingsPage from './pages/FormSettingsPage'
-
+import FormFillPage from './pages/FormFillPage'
 
 function App() {
   return (
@@ -32,6 +32,8 @@ function App() {
         <Route path="/forms/:id/settings" element={<FormSettingsPage />} />
 
         <Route path="*" element={<WelcomePage />} />
+
+        <Route path="/form/:id" element={<FormFillPage />} />
 
       </Routes>
     </BrowserRouter>

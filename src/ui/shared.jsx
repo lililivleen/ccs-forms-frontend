@@ -1,73 +1,95 @@
+// Shared design tokens and primitive components used across all screens.
+
 const _noiseSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="200" height="200" filter="url(#n)" opacity="0.07"/></svg>`;
 export const NOISE_BG = `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(_noiseSvg)}")`;
 
 export const COLORS = {
-  navyDeep: "#0B1A24",
-  navyLight: "#16283A",
-  heading: "#F0ECE0",
-  muted: "#7A8E9A",
-  subtle: "#54636C",
-  teal: "#2DD4BF",
-  cream: "#E8DCC4",
-  ink: "#2A2118",
-  purple: "#6B5B95",
-  border: "rgba(255,255,255,0.12)",
+  bgApp:       "#0B1A24",
+  bgCard:      "#112231",
+  bgPanel:     "#0E1F2E",
+  primary:     "#2C4A5E",
+  teal:        "#2DD4BF",
+  purple:      "#6B5B95",
+  sandy:       "#E8DCC4",
+  sandyText:   "#2A2118",
+  placeholder: "#8B7D5F",
+  heading:     "#F0ECE0",
+  body:        "#A8BAC4",
+  muted:       "#6A7E8A",
+  subtle:      "#3E5464",
+  border:      "rgba(255,255,255,0.09)",
+  borderFocus: "#2DD4BF",
+  danger:      "#F87171",
 };
 
 export const pageBg = {
   height: "100%",
   minHeight: "100vh",
-  backgroundColor: COLORS.navyDeep,
-  backgroundImage: `linear-gradient(160deg, ${COLORS.navyDeep} 0%, ${COLORS.navyLight} 100%), ${NOISE_BG}`,
+  backgroundColor: COLORS.bgApp,
+  backgroundImage: `linear-gradient(160deg, #0B1A24 0%, #16283A 100%), ${NOISE_BG}`,
   backgroundRepeat: "no-repeat, repeat",
   backgroundSize: "100% 100%, 200px 200px",
   backgroundBlendMode: "normal, overlay",
   fontFamily: "'Inter', sans-serif",
-  color: COLORS.muted,
+  color: COLORS.body,
+};
+
+export const sandyInput = {
+  width: "100%",
+  boxSizing: "border-box",
+  padding: "9px 13px",
+  borderRadius: 12,
+  border: `1px solid ${COLORS.border}`,
+  backgroundColor: COLORS.sandy,
+  backgroundImage: NOISE_BG,
+  backgroundRepeat: "repeat",
+  backgroundSize: "200px 200px",
+  backgroundBlendMode: "multiply",
+  color: COLORS.sandyText,
+  fontSize: 13.5,
+  fontFamily: "'Inter', sans-serif",
+  outline: "none",
+  transition: "border-color 0.14s",
 };
 
 export const sandyBtn = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  padding: "12px 32px",
+  padding: "10px 24px",
   borderRadius: 12,
   border: "none",
-  backgroundColor: COLORS.cream,
+  backgroundColor: COLORS.sandy,
   backgroundImage: NOISE_BG,
   backgroundRepeat: "repeat",
   backgroundSize: "200px 200px",
   backgroundBlendMode: "multiply",
-  color: COLORS.ink,
-  fontSize: 14.5,
+  color: COLORS.sandyText,
+  fontSize: 13.5,
   fontWeight: 600,
   cursor: "pointer",
   fontFamily: "'Bricolage Grotesque', sans-serif",
   letterSpacing: "-0.01em",
 };
 
-export const sandyInput = {
-  width: "100%",
-  boxSizing: "border-box",
-  padding: "11px 14px",
-  borderRadius: 10,
+export const ghostBtn = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "10px 24px",
+  borderRadius: 12,
   border: `1px solid ${COLORS.border}`,
-  backgroundColor: COLORS.cream,
-  backgroundImage: NOISE_BG,
-  backgroundRepeat: "repeat",
-  backgroundSize: "200px 200px",
-  backgroundBlendMode: "multiply",
-  color: COLORS.ink,
-  fontSize: 14,
+  background: "rgba(255,255,255,0.04)",
+  color: COLORS.body,
+  fontSize: 13.5,
+  fontWeight: 500,
+  cursor: "pointer",
   fontFamily: "'Inter', sans-serif",
-  outline: "none",
-  transition: "border-color 0.15s ease",
 };
 
 export function focusInput(e) {
   e.currentTarget.style.borderColor = COLORS.teal;
 }
-
 export function blurInput(e) {
   e.currentTarget.style.borderColor = COLORS.border;
 }
@@ -89,5 +111,86 @@ export function WavyDivider({ color = "rgba(255,255,255,0.10)", style }) {
         strokeLinecap="round"
       />
     </svg>
+  );
+}
+
+export function FormTopBar({ formTitle, formId, activeTab, onNavigate }) {
+  const tabs = [
+    { key: "edit",      label: "Edit"      },
+    { key: "preview",   label: "Preview"   },
+    { key: "responses", label: "Responses" },
+    { key: "settings",  label: "Settings"  },
+  ];
+
+  return (
+    <header style={{
+      height: 50,
+      background: "rgba(11,26,36,0.92)",
+      borderBottom: "1px solid rgba(255,255,255,0.07)",
+      display: "flex", alignItems: "center",
+      padding: "0 18px", gap: 12, flexShrink: 0,
+    }}>
+      <button
+        onClick={() => onNavigate("/dashboard")}
+        style={{
+          background: "none", border: "none",
+          color: COLORS.muted, cursor: "pointer",
+          padding: "4px 6px", borderRadius: 6,
+          display: "flex", alignItems: "center", gap: 5,
+          fontSize: 12, fontFamily: "'Inter', sans-serif",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = COLORS.body)}
+        onMouseLeave={(e) => (e.currentTarget.style.color = COLORS.muted)}
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M8.5 2.5L4 7l4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Dashboard
+      </button>
+
+      <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
+
+      <span style={{
+        fontFamily: "'Bricolage Grotesque', sans-serif",
+        fontWeight: 700, fontSize: 14.5,
+        color: COLORS.heading, letterSpacing: "-0.02em",
+        flexShrink: 0,
+      }}>
+        CCS Forms
+      </span>
+
+      <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
+
+      <span style={{
+        fontSize: 13, color: COLORS.body, fontWeight: 500,
+        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+        flex: 1, minWidth: 0,
+      }}>
+        {formTitle}
+      </span>
+
+      <div style={{
+        display: "flex",
+        background: "rgba(255,255,255,0.04)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 12, padding: 3, gap: 2, flexShrink: 0,
+      }}>
+        {tabs.map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => onNavigate(`/forms/${formId}/${key}`)}
+            style={{
+              padding: "5px 13px", borderRadius: 9, border: "none",
+              background: activeTab === key ? "rgba(44,74,94,0.55)" : "transparent",
+              color: activeTab === key ? COLORS.heading : COLORS.subtle,
+              fontSize: 12, fontWeight: 500, cursor: "pointer",
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+    </header>
   );
 }

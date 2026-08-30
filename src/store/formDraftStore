@@ -1,0 +1,48 @@
+// A simple in-memory "draft" store for form data.
+// This is NOT a database — it just lives in a plain JS object in memory,
+// so it survives navigation between routes (Edit <-> Preview) within the
+// same browser session, but resets on page refresh.
+
+const drafts = {};
+
+const DEFAULT_TITLE = "Customer Satisfaction Survey";
+const DEFAULT_DESCRIPTION = "Share your feedback. This takes about 2 minutes.";
+
+function genId() {
+  return Math.random().toString(36).slice(2, 9);
+}
+
+function defaultFields() {
+  return [
+    { id: genId(), type: "short_text", label: "Full name", required: false, placeholder: "", helpText: "" },
+    { id: genId(), type: "email", label: "Email address", required: false, placeholder: "", helpText: "" },
+    {
+      id: genId(),
+      type: "multiple_choice",
+      label: "How would you rate your overall experience?",
+      required: false,
+      placeholder: "",
+      helpText: "",
+      options: [
+        { id: genId(), label: "Option 1" },
+        { id: genId(), label: "Option 2" },
+      ],
+    },
+    { id: genId(), type: "long_text", label: "Additional comments", required: false, placeholder: "", helpText: "" },
+  ];
+}
+
+export function getDraft(id) {
+  if (!drafts[id]) {
+    drafts[id] = {
+      title: DEFAULT_TITLE,
+      description: DEFAULT_DESCRIPTION,
+      fields: defaultFields(),
+    };
+  }
+  return drafts[id];
+}
+
+export function setDraft(id, data) {
+  drafts[id] = { ...getDraft(id), ...data };
+}

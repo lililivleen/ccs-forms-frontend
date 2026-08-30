@@ -5,6 +5,10 @@ import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import FormEditorPage from './pages/FormEditorPage'
 import SignupPage from './pages/SignupPage'
+import FormPreviewPage from './pages/FormPreviewPage'
+import FormResponsesPage from './pages/FormResponsesPage'
+import FormSettingsPage from './pages/FormSettingsPage'
+
 
 function App() {
   return (
@@ -17,9 +21,17 @@ function App() {
 
         <Route path="/dashboard" element={<DashboardPage />} />
 
-        <Route path="/form/:id" element={<FormEditorPage />} />
+        <Route path="/forms/:id/edit" element={<FormEditorPage />} />
 
         <Route path="/signup" element={<SignupPage />} />
+
+        <Route path="/forms/:id/preview" element={<FormPreviewPage />} />
+
+        <Route path="/forms/:id/responses" element={<FormResponsesPage />} />
+
+        <Route path="/forms/:id/settings" element={<FormSettingsPage />} />
+
+        <Route path="*" element={<WelcomePage />} />
 
       </Routes>
     </BrowserRouter>

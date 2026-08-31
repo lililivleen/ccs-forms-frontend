@@ -222,10 +222,10 @@ export default function FormFillPage() {
     <div style={{ ...pageBg }}>
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "48px 16px" }}>
         <div style={{
-          background: "#112231",
+          background: "#18162A",
           borderRadius: 16,
           border: "1px solid rgba(255,255,255,0.08)",
-          borderLeft: "3px solid #2C4A5E",
+          borderLeft: "3px solid rgba(102,87,131,0.75)",
           padding: "26px 30px", marginBottom: 12,
         }}>
           <h1 style={{
@@ -249,7 +249,7 @@ export default function FormFillPage() {
             }
             return (
               <div key={field.id} style={{
-                background: "#112231", borderRadius: 14,
+                background: "#18162A", borderRadius: 14,
                 border: "1px solid rgba(255,255,255,0.07)",
                 padding: "20px 24px",
               }}>

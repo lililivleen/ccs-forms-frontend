@@ -31,9 +31,9 @@ export default function FormResponsesPage() {
             </h1>
             <span style={{
               fontSize: 11, color: COLORS.teal,
-              border: "1px solid rgba(45,212,191,0.2)",
+              border: "1px solid rgba(102,87,131,0.35)",
               borderRadius: 6, padding: "2px 8px",
-              background: "rgba(45,212,191,0.06)",
+              background: "rgba(102,87,131,0.10)",
               fontWeight: 600,
             }}>
               {PLACEHOLDER_RESPONSES.length} total
@@ -45,7 +45,7 @@ export default function FormResponsesPage() {
           <WavyDivider color="rgba(255,255,255,0.07)" style={{ marginBottom: 24 }} />
 
           <div style={{
-            background: "#112231",
+            background: "#18162A",
             borderRadius: 14,
             border: "1px solid rgba(255,255,255,0.07)",
             overflow: "hidden",

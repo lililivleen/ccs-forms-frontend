@@ -318,9 +318,9 @@ export function FieldCard({
       onDragOver={onDragOver}
       onDrop={onDrop}
       style={{
-        background: isSelected ? "#152838" : "#112231",
+        background: isSelected ? "rgba(102,87,131,0.14)" : "#18162A",
         borderRadius: 14,
-        border: isSelected ? "1.5px solid #2C4A5E" : "1px solid rgba(255,255,255,0.07)",
+        border: isSelected ? "1.5px solid rgba(102,87,131,0.65)" : "1px solid rgba(255,255,255,0.07)",
         padding: isDivider ? "14px 22px" : "20px 24px",
         cursor: isDragging ? "grabbing" : "pointer",
         position: "relative",
@@ -332,7 +332,7 @@ export function FieldCard({
       <div style={{
         position: "absolute", left: 8, top: "50%",
         transform: "translateY(-50%)",
-        color: isSelected ? "rgba(44,74,94,0.7)" : "rgba(255,255,255,0.12)",
+        color: isSelected ? "rgba(102,87,131,0.75)" : "rgba(255,255,255,0.12)",
         cursor: "grab",
       }}>
         <IconDrag />
@@ -343,9 +343,9 @@ export function FieldCard({
           position: "absolute", top: 14, right: 14,
           fontSize: 10, fontWeight: 600,
           color: isSelected ? COLORS.teal : COLORS.subtle,
-          background: isSelected ? "rgba(45,212,191,0.1)" : "rgba(255,255,255,0.05)",
+          background: isSelected ? "rgba(102,87,131,0.16)" : "rgba(255,255,255,0.05)",
           borderRadius: 6, padding: "2px 7px",
-          border: isSelected ? "1px solid rgba(45,212,191,0.2)" : "none",
+          border: isSelected ? "1px solid rgba(102,87,131,0.32)" : "none",
         }}>
           {index + 1}
         </div>
@@ -447,8 +447,8 @@ export function PropertiesPanel({ field, onChange }) {
         <div style={{
           display: "inline-flex", alignItems: "center", gap: 7,
           padding: "5px 12px", borderRadius: 10,
-          background: "rgba(44,74,94,0.35)",
-          border: "1px solid rgba(44,74,94,0.5)",
+          background: "rgba(102,87,131,0.15)",
+          border: "1px solid rgba(102,87,131,0.35)",
           fontSize: 12, fontWeight: 600, color: "#A8BAC4",
           marginBottom: 16,
         }}>
@@ -483,14 +483,14 @@ export function PropertiesPanel({ field, onChange }) {
                   onClick={() => onChange({ required: !field.required })}
                   style={{
                     width: 36, height: 20, borderRadius: 10,
-                    background: field.required ? COLORS.teal : "rgba(255,255,255,0.09)",
+                    background: field.required ? COLORS.primary : "rgba(255,255,255,0.09)",
                     border: "1px solid rgba(255,255,255,0.1)",
                     position: "relative", cursor: "pointer",
                   }}
                 >
                   <div style={{
                     width: 14, height: 14, borderRadius: "50%",
-                    background: field.required ? "#0B1A24" : "rgba(255,255,255,0.5)",
+                    background: field.required ? "#171126" : "rgba(255,255,255,0.5)",
                     position: "absolute", top: 2,
                     left: field.required ? 18 : 2,
                     transition: "left 0.15s",
@@ -512,8 +512,8 @@ export function PropertiesPanel({ field, onChange }) {
                   padding: "5px 11px", borderRadius: 9,
                   border: "1px solid",
                   borderColor: field.maxRating === n ? COLORS.teal : "rgba(255,255,255,0.1)",
-                  background: field.maxRating === n ? "rgba(45,212,191,0.12)" : "rgba(255,255,255,0.04)",
-                  color: field.maxRating === n ? COLORS.teal : COLORS.body,
+                  background: field.maxRating === n ? "rgba(102,87,131,0.16)" : "rgba(255,255,255,0.04)",
+                  color: field.maxRating === n ? COLORS.primary : COLORS.body,
                   fontSize: 12.5, fontWeight: 600, cursor: "pointer",
                 }}>
                   {n}

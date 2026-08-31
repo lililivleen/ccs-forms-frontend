@@ -46,8 +46,8 @@ function AmbientBubbles() {
             width: b.size,
             height: b.size,
             borderRadius: "50%",
-            border: "1px solid #2DD4BF",
-            background: "rgba(45,212,191,0.03)",
+            border: "1px solid rgba(102,87,131,0.45)",
+            background: "rgba(102,87,131,0.05)",
             animation: `dashboardFloatUp ${18 + b.delay}s linear ${b.delay}s infinite`,
           }}
         />
@@ -135,8 +135,8 @@ export default function DashboardPage() {
                 color: COLORS.subtle, minHeight: 120,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = `rgba(45,212,191,0.3)`;
-                e.currentTarget.style.color = COLORS.teal;
+                e.currentTarget.style.borderColor = `rgba(102,87,131,0.45)`;
+                e.currentTarget.style.color = COLORS.primary;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
@@ -162,7 +162,7 @@ function FormCard({ form, onOpen }) {
     <div
       onClick={onOpen}
       style={{
-        background: "#112231",
+        background: "#18162A",
         border: "1px solid rgba(255,255,255,0.07)",
         borderRadius: 14, padding: "20px 20px 16px",
         cursor: "pointer", display: "flex",
@@ -170,19 +170,19 @@ function FormCard({ form, onOpen }) {
         minHeight: 120,
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = "rgba(44,74,94,0.6)";
-        e.currentTarget.style.background = "#152838";
+        e.currentTarget.style.borderColor = "rgba(102,87,131,0.45)";
+        e.currentTarget.style.background = "rgba(102,87,131,0.12)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
-        e.currentTarget.style.background = "#112231";
+        e.currentTarget.style.background = "#18162A";
       }}
     >
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
         <div style={{
           width: 36, height: 36, borderRadius: 10,
-          background: "rgba(44,74,94,0.35)",
-          border: "1px solid rgba(44,74,94,0.4)",
+          background: "rgba(102,87,131,0.15)",
+          border: "1px solid rgba(102,87,131,0.35)",
           display: "flex", alignItems: "center", justifyContent: "center",
           flexShrink: 0,
         }}>
@@ -194,9 +194,9 @@ function FormCard({ form, onOpen }) {
         </div>
         <span style={{
           fontSize: 10.5, color: COLORS.teal,
-          border: "1px solid rgba(45,212,191,0.2)",
+          border: "1px solid rgba(102,87,131,0.35)",
           borderRadius: 6, padding: "2px 7px",
-          background: "rgba(45,212,191,0.06)",
+          background: "rgba(102,87,131,0.10)",
           fontWeight: 600, flexShrink: 0,
         }}>
           {form.fields} fields

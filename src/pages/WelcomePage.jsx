@@ -334,8 +334,8 @@ export default function WelcomePage() {
                 flexDirection: "column",
                 height: "100%",
                 minHeight: "100vh",
-                backgroundColor: "#0B1A24",
-                backgroundImage: `linear-gradient(160deg, #0B1A24 0%, #16283A 100%), ${NOISE_BG}`,
+                backgroundColor: "#150e23fa",
+                backgroundImage: `linear-gradient(160deg, #150e23 0%, #1b1629 100%), ${NOISE_BG}`,
                 backgroundRepeat: "no-repeat, repeat",
                 backgroundSize: "100% 100%, 200px 200px",
                 backgroundBlendMode: "normal, overlay",
@@ -435,7 +435,7 @@ export default function WelcomePage() {
                                 right: "20%",
                                 height: 120,
                                 background:
-                                    "radial-gradient(ellipse at center, rgba(107,91,149,0.2) 0%, transparent 70%)",
+                                    "radial-gradient(ellipse at center, rgba(102,87,131,0.25) 0%, transparent 70%)",
                                 pointerEvents: "none",
                             }}
                         />
@@ -505,9 +505,9 @@ export default function WelcomePage() {
                                 justifyContent: "center",
                                 padding: "12px 32px",
                                 borderRadius: 12,
-                                border: "1px solid rgba(255,255,255,0.12)",
-                                background: "rgba(255,255,255,0.04)",
-                                color: "#A8BAC4",
+                                border: "1px solid rgba(102,87,131,0.35)",
+                                background: "rgba(102,87,131,0.08)",
+                                color: "#D9D1E3",
                                 fontSize: 14.5,
                                 fontWeight: 500,
                                 cursor: "pointer",
@@ -515,13 +515,13 @@ export default function WelcomePage() {
                             }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.borderColor =
-                                    "rgba(255,255,255,0.2)";
+                                    "rgba(102,87,131,0.75)";
                                 e.currentTarget.style.color = "#F0ECE0";
                             }}
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.borderColor =
-                                    "rgba(255,255,255,0.12)";
-                                e.currentTarget.style.color = "#A8BAC4";
+                                    "rgba(102,87,131,0.35)";
+                                e.currentTarget.style.color = "#D9D1E3";
                             }}
                         >
                             Log in
@@ -531,7 +531,7 @@ export default function WelcomePage() {
                     <p
                         style={{
                             fontSize: 11.5,
-                            color: "#2C4A5E",
+                            color: "rgba(102,87,131,0.75)",
                             marginTop: 32,
                             letterSpacing: "0.02em",
                         }}

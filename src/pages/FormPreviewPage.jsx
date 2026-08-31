@@ -25,14 +25,14 @@ export default function FormPreviewPage() {
             <div style={{
               position: "absolute",
               top: -30, left: "10%", right: "10%", height: 80,
-              background: "radial-gradient(ellipse at center, rgba(107,91,149,0.22) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse at center, rgba(102,87,131,0.22) 0%, transparent 70%)",
               pointerEvents: "none",
             }} />
             <div style={{
-              background: "#112231",
+              background: "#18162A",
               borderRadius: 16,
               border: "1px solid rgba(255,255,255,0.08)",
-              borderLeft: "3px solid #2C4A5E",
+              borderLeft: "3px solid rgba(102,87,131,0.75)",
               padding: "26px 30px", marginBottom: 12, position: "relative",
             }}>
               <h1 style={{
@@ -58,7 +58,7 @@ export default function FormPreviewPage() {
               }
               return (
                 <div key={field.id} style={{
-                  background: "#112231", borderRadius: 14,
+                  background: "#18162A", borderRadius: 14,
                   border: "1px solid rgba(255,255,255,0.07)",
                   padding: "20px 24px",
                 }}>
@@ -90,7 +90,7 @@ export default function FormPreviewPage() {
 
           {fields.length === 0 && (
             <div style={{
-              background: "#112231", borderRadius: 14,
+              background: "#18162A", borderRadius: 14,
               border: "1px dashed rgba(255,255,255,0.08)",
               padding: "44px 24px", textAlign: "center",
             }}>

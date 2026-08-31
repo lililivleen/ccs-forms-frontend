@@ -36,7 +36,7 @@ export default function FormSettingsPage() {
           <WavyDivider color="rgba(255,255,255,0.07)" style={{ marginBottom: 24 }} />
 
           <div style={{
-            background: "#112231",
+            background: "#18162A",
             borderRadius: 14,
             border: "1px solid rgba(255,255,255,0.07)",
             overflow: "hidden",
@@ -138,7 +138,7 @@ function Toggle({ value, onChange }) {
       onClick={() => onChange(!value)}
       style={{
         width: 36, height: 20, borderRadius: 10,
-        background: value ? COLORS.teal : "rgba(255,255,255,0.09)",
+        background: value ? COLORS.primary : "rgba(255,255,255,0.09)",
         border: "1px solid rgba(255,255,255,0.1)",
         position: "relative", cursor: "pointer",
         transition: "background 0.2s",

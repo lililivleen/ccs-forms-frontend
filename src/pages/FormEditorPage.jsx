@@ -207,7 +207,7 @@ export default function FormEditorPage() {
         <aside
           style={{
             width: 214,
-            background: "rgba(14,31,46,0.95)",
+            background: "rgba(25,21,42,0.96)",
             borderRight: "1px solid rgba(255,255,255,0.07)",
             flexShrink: 0,
             overflowY: "auto",
@@ -240,18 +240,18 @@ export default function FormEditorPage() {
                 right: "5%",
                 height: 60,
                 background:
-                  "radial-gradient(ellipse at center, rgba(107,91,149,0.18) 0%, transparent 70%)",
+                  "radial-gradient(ellipse at center, rgba(102,87,131,0.22) 0%, transparent 70%)",
                 pointerEvents: "none",
               }}
             />
 
             <div
               style={{
-                background: "#112231",
+                background: "#18162A",
                 borderRadius: 16,
-                borderLeft: "3px solid #2C4A5E",
+                borderLeft: "3px solid rgba(102,87,131,0.75)",
                 border: "1px solid rgba(255,255,255,0.07)",
-                borderLeftColor: "#2C4A5E",
+                borderLeftColor: "rgba(102,87,131,0.75)",
                 padding: "20px 24px",
                 position: "relative",
               }}
@@ -357,7 +357,7 @@ export default function FormEditorPage() {
                 style={{
                   textAlign: "center",
                   padding: "64px 24px",
-                  background: "#112231",
+                  background: "#18162A",
                   borderRadius: 16,
                   border:
                     "1px dashed rgba(255,255,255,0.08)",
@@ -395,7 +395,7 @@ export default function FormEditorPage() {
         <aside
           style={{
             width: 264,
-            background: "rgba(14,31,46,0.95)",
+            background: "rgba(25,21,42,0.96)",
             borderLeft:
               "1px solid rgba(255,255,255,0.07)",
             flexShrink: 0,

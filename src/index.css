@@ -1,9 +1,147 @@
-@import "tailwindcss";
+/* =========================================================
+   CCS FORMS — GLOBAL THEME
+   ========================================================= */
+
+:root {
+  /* Main backgrounds */
+  --bg-app: #150e23;
+  --bg-app-light: #19152a;
+  --bg-header: #171126;
+
+  /* Surfaces */
+  --bg-card: #18162a;
+  --bg-card-hover: #1b1830;
+  --bg-panel: #19152a;
+  --bg-panel-soft: #1b1830;
+
+  /* Brand */
+  --primary: #665783;
+  --primary-light: #786a99;
+  --primary-soft: rgba(102, 87, 131, 0.18);
+
+  /* Interaction */
+  --accent: #665783;
+  --accent-soft: rgba(102, 87, 131, 0.12);
+  --accent-border: rgba(102, 87, 131, 0.30);
+
+  /* Cream */
+  --cream: #e8dcc4;
+  --cream-text: #2a2118;
+  --cream-muted: #8b7d5f;
+
+  /* Text */
+  --text-heading: #f0ece0;
+  --text-body: #aeb5c1;
+  --text-muted: #747d8d;
+  --text-subtle: #596477;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.05);
+  --border-purple: rgba(102, 87, 131, 0.32);
+
+  /* Feedback */
+  --danger: #f87171;
+
+  /* Typography */
+  font-family: "Inter", sans-serif;
+  color: var(--text-body);
+  background: var(--bg-app);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body,
 #root {
   margin: 0;
-  padding: 0;
+  width: 100%;
   min-height: 100%;
-  background-color: #0B1A24;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+
+  background: var(--bg-app);
+
+  color: var(--text-body);
+
+  font-family: "Inter", sans-serif;
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bricolage Grotesque", sans-serif;
+  color: var(--text-heading);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(102, 87, 131, 0.45);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 106, 153, 0.65);
 }

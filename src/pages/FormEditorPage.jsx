@@ -19,6 +19,7 @@ export default function FormEditorPage() {
   const [selectedId, setSelectedId] = useState(
     draft.fields?.[0]?.id ?? null
   );
+  const [draggedFieldId, setDraggedFieldId] = useState(null);
   const [formTitle, setFormTitle] = useState(draft.title || "");
   const [formDescription, setFormDescription] = useState(
     draft.description || ""
@@ -157,6 +158,29 @@ export default function FormEditorPage() {
     });
   }, []);
 
+  const reorderFields = useCallback((draggedId, targetId) => {
+    if (!draggedId || !targetId || draggedId === targetId) {
+      return;
+    }
+
+    setFields((prevFields) => {
+      const from = prevFields.findIndex(
+        (field) => field.id === draggedId
+      );
+      const to = prevFields.findIndex(
+        (field) => field.id === targetId
+      );
+
+      if (from < 0 || to < 0) return prevFields;
+
+      const nextFields = [...prevFields];
+      const [movedField] = nextFields.splice(from, 1);
+      nextFields.splice(to, 0, movedField);
+
+      return nextFields;
+    });
+  }, []);
+
   return (
     <div
       style={{
@@ -289,6 +313,7 @@ export default function FormEditorPage() {
                 key={field.id}
                 field={field}
                 isSelected={selectedId === field.id}
+                isDragging={draggedFieldId === field.id}
                 index={index}
                 total={fields.length}
                 onSelect={() =>
@@ -306,6 +331,23 @@ export default function FormEditorPage() {
                 onMoveDown={() =>
                   moveField(field.id, 1)
                 }
+                onDragStart={(event) => {
+                  event.dataTransfer.effectAllowed = "move";
+                  event.dataTransfer.setData("text/plain", field.id);
+                  setDraggedFieldId(field.id);
+                  setSelectedId(field.id);
+                }}
+                onDragEnd={() => setDraggedFieldId(null)}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  event.dataTransfer.dropEffect = "move";
+                }}
+                onDrop={() => {
+                  if (draggedFieldId) {
+                    reorderFields(draggedFieldId, field.id);
+                    setDraggedFieldId(null);
+                  }
+                }}
               />
             ))}
 

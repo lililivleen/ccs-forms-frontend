@@ -304,19 +304,29 @@ export function FieldPreviewContent({ field }) {
 /* ---------------- Field Card (Editor view) ---------------- */
 
 export function FieldCard({
-  field, isSelected, index, total,
+  field, isSelected, isDragging, index, total,
   onSelect, onDelete, onDuplicate, onMoveUp, onMoveDown,
+  onDragStart, onDragEnd, onDragOver, onDrop,
 }) {
   const isDivider = field.type === "divider";
   return (
     <div
+      draggable={!isDivider}
       onClick={onSelect}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
       style={{
         background: isSelected ? "#152838" : "#112231",
         borderRadius: 14,
         border: isSelected ? "1.5px solid #2C4A5E" : "1px solid rgba(255,255,255,0.07)",
         padding: isDivider ? "14px 22px" : "20px 24px",
-        cursor: "pointer", position: "relative",
+        cursor: isDragging ? "grabbing" : "pointer",
+        position: "relative",
+        opacity: isDragging ? 0.65 : 1,
+        boxShadow: isDragging ? "0 8px 18px rgba(0,0,0,0.18)" : "none",
+        userSelect: "none",
       }}
     >
       <div style={{

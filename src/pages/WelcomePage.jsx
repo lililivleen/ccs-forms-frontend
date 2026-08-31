@@ -70,22 +70,22 @@ function AnimatedForm() {
             <style>
                 {`
           .ccs-form-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: ccsDrawForm 11s ease-in-out infinite;
-          }
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: ccsDrawForm 6s ease-in-out infinite;
+}
 
-          .ccs-field {
-            stroke-dasharray: 500;
-            stroke-dashoffset: 500;
-            animation: ccsDrawField 11s ease-out infinite;
-          }
+.ccs-field {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: ccsDrawField 6s ease-out infinite;
+}
 
-          .ccs-signature {
-            stroke-dasharray: 300;
-            stroke-dashoffset: 300;
-            animation: ccsSignature 11s ease-out infinite;
-          }
+.ccs-signature {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: ccsSignature 6s ease-out infinite;
+}
 
           @keyframes ccsDrawForm {
             0%, 18% {
@@ -318,6 +318,7 @@ function AnimatedForm() {
                     strokeWidth="4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    transform="translate(0, 20)"
                 />
             </svg>
         </div>

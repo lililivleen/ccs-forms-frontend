@@ -346,7 +346,7 @@ export default function WelcomePage() {
             <header
                 style={{
                     height: 72,
-                    background: "rgba(11,26,36,0.92)",
+                    background: "#09111A",
                     borderBottom: "1px solid rgba(255,255,255,0.07)",
                     display: "flex",
                     alignItems: "center",

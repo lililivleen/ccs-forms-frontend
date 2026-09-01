@@ -416,7 +416,7 @@ export function FormTopBar({
         height: 50,
 
         background:
-          "rgba(16,21,34,0.96)",
+          "#09111A",
 
         borderBottom:
           "1px solid rgba(255,255,255,0.07)",

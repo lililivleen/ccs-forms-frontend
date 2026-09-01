@@ -65,7 +65,7 @@ export default function DashboardPage() {
 
       <header style={{
         height: 72,
-        background: "rgba(11,26,36,0.92)",
+        background: "#09111A",
         borderBottom: "1px solid rgba(255,255,255,0.07)",
         display: "flex", alignItems: "center",
         padding: "0 32px", gap: 12, flexShrink: 0,
@@ -162,20 +162,23 @@ function FormCard({ form, onOpen }) {
     <div
       onClick={onOpen}
       style={{
-        background: "#18162A",
+        background: "#11131B",
         border: "1px solid rgba(255,255,255,0.07)",
         borderRadius: 14, padding: "20px 20px 16px",
         cursor: "pointer", display: "flex",
         flexDirection: "column", gap: 10,
         minHeight: 120,
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = "rgba(102,87,131,0.45)";
-        e.currentTarget.style.background = "rgba(102,87,131,0.12)";
+        e.currentTarget.style.borderColor = "rgba(131,110,180,0.45)";
+        e.currentTarget.style.background = "linear-gradient(180deg, rgba(131,110,180,0.14), rgba(17,19,27,0.98))";
+        e.currentTarget.style.boxShadow = "0 10px 18px rgba(9,9,15,0.24), inset 0 1px 0 rgba(255,255,255,0.04)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
-        e.currentTarget.style.background = "#18162A";
+        e.currentTarget.style.background = "#11131B";
+        e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.03)";
       }}
     >
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>

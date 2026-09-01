@@ -207,7 +207,7 @@ export default function FormEditorPage() {
         <aside
           style={{
             width: 214,
-            background: "rgba(25,21,42,0.96)",
+            background: "#09111A",
             borderRight: "1px solid rgba(255,255,255,0.07)",
             flexShrink: 0,
             overflowY: "auto",
@@ -395,7 +395,7 @@ export default function FormEditorPage() {
         <aside
           style={{
             width: 264,
-            background: "rgba(25,21,42,0.96)",
+            background: "#09111A",
             borderLeft:
               "1px solid rgba(255,255,255,0.07)",
             flexShrink: 0,

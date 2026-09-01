@@ -1,19 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { pageBg, FormTopBar, sandyBtn, WavyDivider, COLORS } from "../ui/shared";
 import { FieldPreviewContent } from "../ui/formFields";
-import { getDraft } from "../store/formDraftStore";
+import { getDraft, normalizeFormDraft } from "../store/formDraftStore";
 
 export default function FormPreviewPage() {
   const navigate = useNavigate();
   const { id = "new" } = useParams();
 
   const draft = getDraft(id);
-  const { title, description, fields } = draft;
+  const normalized = normalizeFormDraft(draft);
+  const sections = normalized.sections.length ? normalized.sections : [{ title: "Section 1", description: "", questions: normalized.fields || [] }];
 
   return (
     <div style={{ ...pageBg, display: "flex", flexDirection: "column" }}>
       <FormTopBar
-        formTitle={title}
+        formTitle={normalized.title}
         formId={id}
         activeTab="preview"
         onNavigate={navigate}
@@ -41,54 +42,69 @@ export default function FormPreviewPage() {
                 color: "#F0ECE0", margin: "0 0 8px",
                 letterSpacing: "-0.025em",
               }}>
-                {title || "Untitled Form"}
+                {normalized.title || "Untitled Form"}
               </h1>
-              {description && (
+              {normalized.description && (
                 <p style={{ color: COLORS.body, fontSize: 13.5, margin: 0, lineHeight: 1.65 }}>
-                  {description}
+                  {normalized.description}
                 </p>
               )}
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {fields.map((field) => {
-              if (field.type === "divider") {
-                return <WavyDivider key={field.id} color="rgba(255,255,255,0.11)" style={{ margin: "4px 0" }} />;
-              }
-              return (
-                <div key={field.id} style={{
-                  background: "#18162A", borderRadius: 14,
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  padding: "20px 24px",
-                }}>
-                  <p style={{
-                    fontSize: 14.5, fontWeight: 600, color: "#F0ECE0",
-                    margin: "0 0 10px",
-                    fontFamily: "'Bricolage Grotesque', sans-serif",
-                    letterSpacing: "-0.01em",
-                  }}>
-                    {field.label}
-                    {field.required && <span style={{ color: "#F87171", marginLeft: 4 }}>*</span>}
-                  </p>
-                  {field.helpText && (
-                    <p style={{ fontSize: 12.5, color: COLORS.muted, margin: "-5px 0 10px", lineHeight: 1.4 }}>
-                      {field.helpText}
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            {sections.map((section, sectionIndex) => (
+              <div key={section.id || sectionIndex} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {(section.title || sectionIndex > 0) && (
+                  <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", padding: "12px 14px" }}>
+                    <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: COLORS.heading, fontFamily: "'Bricolage Grotesque', sans-serif" }}>
+                      {section.title || `Section ${sectionIndex + 1}`}
                     </p>
-                  )}
-                  <FieldPreviewContent field={field} />
-                </div>
-              );
-            })}
+                    {section.description && (
+                      <p style={{ margin: "6px 0 0", fontSize: 12.5, color: COLORS.muted }}>{section.description}</p>
+                    )}
+                  </div>
+                )}
+
+                {(section.questions || []).map((field) => {
+                  if (field.type === "divider") {
+                    return <WavyDivider key={field.id} color="rgba(255,255,255,0.11)" style={{ margin: "4px 0" }} />;
+                  }
+                  return (
+                    <div key={field.id} style={{
+                      background: "#18162A", borderRadius: 14,
+                      border: "1px solid rgba(255,255,255,0.07)",
+                      padding: "20px 24px",
+                    }}>
+                      <p style={{
+                        fontSize: 14.5, fontWeight: 600, color: "#F0ECE0",
+                        margin: "0 0 10px",
+                        fontFamily: "'Bricolage Grotesque', sans-serif",
+                        letterSpacing: "-0.01em",
+                      }}>
+                        {field.label}
+                        {field.required && <span style={{ color: "#F87171", marginLeft: 4 }}>*</span>}
+                      </p>
+                      {field.helpText && (
+                        <p style={{ fontSize: 12.5, color: COLORS.muted, margin: "-5px 0 10px", lineHeight: 1.4 }}>
+                          {field.helpText}
+                        </p>
+                      )}
+                      <FieldPreviewContent field={field} />
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
 
-          {fields.length > 0 && (
+          {normalized.fields.length > 0 && (
             <div style={{ marginTop: 18 }}>
               <button style={sandyBtn}>Submit</button>
             </div>
           )}
 
-          {fields.length === 0 && (
+          {normalized.fields.length === 0 && (
             <div style={{
               background: "#18162A", borderRadius: 14,
               border: "1px dashed rgba(255,255,255,0.08)",

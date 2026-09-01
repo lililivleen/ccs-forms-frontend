@@ -437,8 +437,9 @@ function PropRow({ label, children }) {
   );
 }
 
-export function PropertiesPanel({ field, onChange }) {
+export function PropertiesPanel({ field, onChange, sections = [], currentSectionId, onMoveToSection }) {
   const ft = FIELD_TYPES.find((f) => f.type === field.type);
+  const otherSections = sections.filter((section) => section.id !== currentSectionId);
 
   return (
     <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: 22 }}>
@@ -523,6 +524,26 @@ export function PropertiesPanel({ field, onChange }) {
           </PropRow>
         )}
       </div>
+
+      {otherSections.length > 0 && (
+        <div>
+          <p style={sectionLabel}>Move question</p>
+          <select
+            defaultValue=""
+            onChange={(e) => {
+              const nextSectionId = e.target.value;
+              if (nextSectionId && onMoveToSection) onMoveToSection(field.id, nextSectionId);
+              e.target.value = "";
+            }}
+            style={{ ...sandyInput, cursor: "pointer" }}
+          >
+            <option value="">Move to section…</option>
+            {otherSections.map((section) => (
+              <option key={section.id} value={section.id}>{section.title || "Untitled section"}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {(field.type === "multiple_choice" || field.type === "checkbox" || field.type === "dropdown") && (
         <div>

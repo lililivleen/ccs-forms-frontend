@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { COLORS, pageBg, sandyInput, sandyBtn, WavyDivider } from "../ui/shared";
 import { getPublicForm } from "../api/formsApi";
 import { submitResponse } from "../api/responsesApi";
-import { getDraft } from "../store/formDraftStore";
+import { getDraft, normalizeFormDraft } from "../store/formDraftStore";
 import { saveDraftResponse, getDraftResponse, clearDraftResponse } from "../storage/draftResponses";
 
 function FieldInput({ field, value, onChange }) {
@@ -133,8 +133,8 @@ export default function FormFillPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [loadError, setLoadError] = useState(null);
+  const [activeSectionIndex, setActiveSectionIndex] = useState(0);
 
-  // Load the form: try the real backend first, fall back to the local draft.
   useEffect(() => {
     let cancelled = false;
 
@@ -152,7 +152,6 @@ export default function FormFillPage() {
     return () => { cancelled = true; };
   }, [id]);
 
-  // Restore any saved draft answers for this form from IndexedDB.
   useEffect(() => {
     let cancelled = false;
     getDraftResponse(id).then((saved) => {
@@ -160,6 +159,12 @@ export default function FormFillPage() {
     });
     return () => { cancelled = true; };
   }, [id]);
+
+  const normalizedForm = form ? normalizeFormDraft(form) : null;
+  const sections = normalizedForm?.sections?.length
+    ? normalizedForm.sections
+    : [{ id: "section-1", title: "Section 1", description: "", questions: normalizedForm?.fields || [] }];
+  const currentSection = sections[activeSectionIndex] || sections[0];
 
   const updateAnswer = useCallback((fieldId, value) => {
     setAnswers((prev) => {
@@ -169,16 +174,28 @@ export default function FormFillPage() {
     });
   }, [id]);
 
+  const validateCurrentSection = () => {
+    for (const field of currentSection.questions || []) {
+      const value = answers[field.id];
+      const isEmpty = value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0);
+      if (field.required && isEmpty) {
+        window.alert(`Please complete "${field.label}" before continuing.`);
+        return false;
+      }
+    }
+    return true;
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!form) return;
+    if (!normalizedForm) return;
     setSubmitting(true);
     setLoadError(null);
 
-    const payload = form.fields.map((f) => ({
-      fieldId: f.id,
-      label: f.label,
-      value: answers[f.id] ?? null,
+    const payload = normalizedForm.fields.map((field) => ({
+      fieldId: field.id,
+      label: field.label,
+      value: answers[field.id] ?? null,
     }));
 
     try {
@@ -192,7 +209,7 @@ export default function FormFillPage() {
     }
   }
 
-  if (!form) {
+  if (!normalizedForm) {
     return (
       <div style={{ ...pageBg, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <p style={{ color: COLORS.muted, fontSize: 14 }}>Loading form…</p>
@@ -211,7 +228,7 @@ export default function FormFillPage() {
             Response received
           </p>
           <p style={{ fontSize: 14, color: COLORS.muted, margin: 0 }}>
-            Thanks for filling out {form.title}. Your answers have been recorded.
+            Thanks for filling out {normalizedForm.title}. Your answers have been recorded.
           </p>
         </div>
       </div>
@@ -233,17 +250,26 @@ export default function FormFillPage() {
             fontWeight: 700, fontSize: 26, color: "#F0ECE0",
             margin: "0 0 8px", letterSpacing: "-0.025em",
           }}>
-            {form.title || "Untitled Form"}
+            {normalizedForm.title || "Untitled Form"}
           </h1>
-          {form.description && (
+          {normalizedForm.description && (
             <p style={{ color: COLORS.body, fontSize: 13.5, margin: 0, lineHeight: 1.65 }}>
-              {form.description}
+              {normalizedForm.description}
             </p>
           )}
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {form.fields.map((field) => {
+          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "12px 14px" }}>
+            <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: COLORS.heading, fontFamily: "'Bricolage Grotesque', sans-serif" }}>
+              {currentSection.title || `Section ${activeSectionIndex + 1}`}
+            </p>
+            {currentSection.description && (
+              <p style={{ margin: "6px 0 0", fontSize: 12.5, color: COLORS.muted }}>{currentSection.description}</p>
+            )}
+          </div>
+
+          {(currentSection.questions || []).map((field) => {
             if (field.type === "divider") {
               return <WavyDivider key={field.id} color="rgba(255,255,255,0.11)" style={{ margin: "4px 0" }} />;
             }
@@ -267,24 +293,41 @@ export default function FormFillPage() {
                     {field.helpText}
                   </p>
                 )}
-                <FieldInput
-                  field={field}
-                  value={answers[field.id]}
-                  onChange={(v) => updateAnswer(field.id, v)}
-                />
+                <FieldInput field={field} value={answers[field.id]} onChange={(value) => updateAnswer(field.id, value)} />
               </div>
             );
           })}
 
-          {loadError && (
-            <p style={{ color: "#F87171", fontSize: 13, margin: "4px 0" }}>{loadError}</p>
-          )}
-
-          <div style={{ marginTop: 8 }}>
-            <button type="submit" disabled={submitting} style={{ ...sandyBtn, opacity: submitting ? 0.6 : 1 }}>
-              {submitting ? "Submitting…" : "Submit"}
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
+            <button
+              type="button"
+              style={{ ...sandyBtn, opacity: activeSectionIndex === 0 ? 0.55 : 1 }}
+              onClick={() => setActiveSectionIndex((prev) => Math.max(prev - 1, 0))}
+              disabled={activeSectionIndex === 0}
+            >
+              Back
             </button>
+
+            {activeSectionIndex < sections.length - 1 ? (
+              <button
+                type="button"
+                style={sandyBtn}
+                onClick={() => {
+                  if (validateCurrentSection()) setActiveSectionIndex((prev) => prev + 1);
+                }}
+              >
+                Next
+              </button>
+            ) : (
+              <button type="submit" style={sandyBtn} disabled={submitting}>
+                {submitting ? "Submitting…" : "Submit"}
+              </button>
+            )}
           </div>
+
+          {loadError && (
+            <p style={{ color: "#FCA5A5", fontSize: 12.5, marginTop: 8 }}>{loadError}</p>
+          )}
         </form>
       </div>
     </div>

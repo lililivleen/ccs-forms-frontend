@@ -8,8 +8,20 @@ const drafts = {};
 const DEFAULT_TITLE = "Customer Satisfaction Survey";
 const DEFAULT_DESCRIPTION = "Share your feedback. This takes about 2 minutes.";
 
-function genId() {
+export function genId() {
   return Math.random().toString(36).slice(2, 9);
+}
+
+function cloneQuestion(question) {
+  if (!question || typeof question !== "object") return question;
+
+  return {
+    ...question,
+    id: question.id || genId(),
+    options: Array.isArray(question.options)
+      ? question.options.map((option) => ({ ...option, id: option.id || genId() }))
+      : question.options,
+  };
 }
 
 function defaultFields() {
@@ -32,17 +44,68 @@ function defaultFields() {
   ];
 }
 
+export function createEmptySection(index = 0) {
+  return {
+    id: genId(),
+    title: `Section ${index + 1}`,
+    description: "",
+    questions: [],
+  };
+}
+
+export function normalizeFormDraft(data = {}) {
+  const inputSections = Array.isArray(data.sections) ? data.sections : [];
+  const legacyFields = Array.isArray(data.fields) ? data.fields : [];
+
+  const sections = inputSections.length
+    ? inputSections.map((section, index) => ({
+        id: section.id || genId(),
+        title: section.title || `Section ${index + 1}`,
+        description: section.description || "",
+        questions: Array.isArray(section.questions)
+          ? section.questions.map(cloneQuestion)
+          : [],
+      }))
+    : [
+        {
+          id: genId(),
+          title: "Section 1",
+          description: "",
+          questions: legacyFields.length ? legacyFields.map(cloneQuestion) : defaultFields().map(cloneQuestion),
+        },
+      ];
+
+  const flattened = sections.flatMap((section) => section.questions || []);
+
+  return {
+    title: data.title || DEFAULT_TITLE,
+    description: data.description || DEFAULT_DESCRIPTION,
+    sections,
+    fields: flattened,
+  };
+}
+
+export function getDraftSections(form) {
+  if (!form) return [{ id: genId(), title: "Section 1", description: "", questions: [] }];
+  const normalized = normalizeFormDraft(form);
+  return normalized.sections;
+}
+
+export function getDraftQuestions(form) {
+  return getDraftSections(form).flatMap((section) => section.questions || []);
+}
+
 export function getDraft(id) {
   if (!drafts[id]) {
-    drafts[id] = {
+    drafts[id] = normalizeFormDraft({
       title: DEFAULT_TITLE,
       description: DEFAULT_DESCRIPTION,
       fields: defaultFields(),
-    };
+    });
   }
   return drafts[id];
 }
 
 export function setDraft(id, data) {
-  drafts[id] = { ...getDraft(id), ...data };
+  drafts[id] = normalizeFormDraft({ ...getDraft(id), ...data });
 }

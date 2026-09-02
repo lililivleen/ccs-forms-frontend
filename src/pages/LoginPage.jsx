@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
 import {
   COLORS,
   sandyInput,
@@ -319,6 +320,27 @@ export default function LoginPage() {
               Log in
             </button>
           </form>
+          <div style={{ margin: "18px 0", display: "flex", alignItems: "center", gap: 12 }}>
+  <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+  <span style={{ fontSize: 11.5, color: COLORS.muted }}>or</span>
+  <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+</div>
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <GoogleLogin
+    onSuccess={(credentialResponse) => {
+      // TEMPORARY: backend can't verify this yet, so we just log in locally.
+      // Once your backend partner adds real OAuth verification, replace this
+      // with a call to your authApi that sends credentialResponse.credential
+      // to POST /auth/login and stores the real session token instead.
+      console.log("Google credential:", credentialResponse.credential);
+      navigate("/dashboard");
+    }}
+    onError={() => {
+      console.log("Google login failed");
+    }}
+  />
+</div>
 
           <p
             style={{

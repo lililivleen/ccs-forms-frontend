@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { COLORS, pageBg, sandyBtn, WavyDivider } from "../ui/shared";
 import ccsLogo from "../assets/ccs-logo.png";
+import { genId } from "../ui/formFields";
+import { setDraft } from "../store/formDraftStore";
+import CreateFormModal from "../components/CreateFormModal";
 
 const PLACEHOLDER_FORMS = [
   { id: "form-1", title: "Customer Satisfaction Survey", fields: 4, updated: "2 hours ago" },
@@ -58,6 +62,14 @@ function AmbientBubbles() {
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  function handleCreateForm(title, description) {
+    const id = genId();
+    setDraft(id, { title, description, fields: [] });
+    setShowCreateModal(false);
+    navigate(`/forms/${id}/edit`);
+  }
 
   return (
     <div style={{ ...pageBg, display: "flex", flexDirection: "column", position: "relative" }}>
@@ -88,7 +100,7 @@ export default function DashboardPage() {
         <div style={{ flex: 1 }} />
 
         <button
-          onClick={() => navigate("/forms/new/edit")}
+          onClick={() => setShowCreateModal(true)}
           style={{ ...sandyBtn, padding: "7px 18px", fontSize: 13 }}
         >
           New form
@@ -124,7 +136,7 @@ export default function DashboardPage() {
             ))}
 
             <button
-              onClick={() => navigate("/forms/new/edit")}
+              onClick={() => setShowCreateModal(true)}
               style={{
                 background: "rgba(255,255,255,0.02)",
                 border: "1px dashed rgba(255,255,255,0.1)",
@@ -153,6 +165,12 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      <CreateFormModal
+        open={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onCreate={handleCreateForm}
+      />
     </div>
   );
 }

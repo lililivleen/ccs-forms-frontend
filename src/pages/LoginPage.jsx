@@ -45,7 +45,7 @@ function ScribbleBackground() {
 
         .ccs-scribble-2 {
           stroke-width: 1.2;
-          opacity: 0.07;
+          opacity: 0.07;  
           animation-delay: 0.5s;
         }
 

@@ -14,6 +14,7 @@ import {
   createEmptySection,
   normalizeFormDraft,
 } from "../store/formDraftStore";
+import { updateDraftFormContent } from "../api/formsApi";
 
 export default function FormEditorPage() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function FormEditorPage() {
     normalizedDraft.sections[0]?.questions?.[0]?.id ?? null
   );
   const [draggedFieldId, setDraggedFieldId] = useState(null);
+  const [saveState, setSaveState] = useState("idle");
 
   useEffect(() => {
     setDraft(id, {
@@ -42,6 +44,20 @@ export default function FormEditorPage() {
       sections,
     });
   }, [id, formTitle, formDescription, sections]);
+
+  async function handleSave() {
+    setSaveState("saving");
+    try {
+      await updateDraftFormContent(id, {
+        title: formTitle,
+        description: formDescription,
+        sections,
+      });
+      setSaveState("saved");
+    } catch {
+      setSaveState("error");
+    }
+  }
 
   useEffect(() => {
     if (!sections.length) {
@@ -431,6 +447,23 @@ export default function FormEditorPage() {
                 </div>
               </div>
             ))}
+
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 12, padding: "4px 0 20px" }}>
+              {saveState === "saved" && (
+                <span style={{ fontSize: 12, color: COLORS.teal }}>Changes saved</span>
+              )}
+              {saveState === "error" && (
+                <span style={{ fontSize: 12, color: COLORS.danger }}>Could not save changes</span>
+              )}
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={saveState === "saving"}
+                style={{ ...sandyBtn, minWidth: 112, padding: "10px 20px", opacity: saveState === "saving" ? 0.65 : 1 }}
+              >
+                {saveState === "saving" ? "Saving..." : "Save changes"}
+              </button>
+            </div>
           </div>
         </main>
 
